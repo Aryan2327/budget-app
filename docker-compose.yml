@@ -1,0 +1,11 @@
+# compose file for spinning up server and database containers
+services:
+  postgres:
+    image: "postgres:16.1-bullseye"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./init_db.sh:/docker-entrypoint-initdb.d/init_db.sh
+    ports:
+      - 5432:5432
