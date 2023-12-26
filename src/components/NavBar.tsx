@@ -17,7 +17,7 @@ function Navbar() {
                     <NavLink to="/daily">Daily Expenses</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/weekly">Monthly Expenses</NavLink>
+                    <NavLink to="/monthly">Monthly Expenses</NavLink>
                 </li>
                 <li>
                     <NavLink to="/visualizations">Visualizations</NavLink>

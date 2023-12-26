@@ -8,7 +8,8 @@ nav {
     align-items: center;
     background-color: navy;
     position: sticky;
-    top: 0
+    top: 0;
+    z-index: 9999;
 }
 
 nav .title {

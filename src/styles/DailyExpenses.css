@@ -1,0 +1,21 @@
+/* .buttons {
+
+} */
+
+.modal .modal-content {
+    background-color: lightblue;
+}
+
+.page > div {
+    margin-bottom: 5%;
+}
+
+.description {
+    text-align: center;
+}
+
+.table {
+    text-align: center;
+    margin: 0 10%;
+    width: 80%
+}
