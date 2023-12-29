@@ -8,7 +8,6 @@ import Form from 'react-bootstrap/Form';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/DailyExpenses.css';
-//import '../styles/Modal.css'
 
 const expenseTypes: string[] = ["Housing/Maintenance","Food", "Transportation","Clothing","Medical","Household supplies","Personal","Education","Gifts","Entertainment"]
 interface DailyExpenseForm {
@@ -19,8 +18,6 @@ interface DailyExpenseForm {
 
 export const DailyExpenses = () => {
     const [show, setShow] = useState(false)
-    const [disableButton, setDisableButton] = useState(true)
-    //const []
 
     // For dynamic table data
     const [data, setData] = useState<DailyExpenseForm[]>([])
@@ -51,8 +48,17 @@ export const DailyExpenses = () => {
             console.log(formData)
             setData(data.concat([formData]))
             handleClose()
-           
     }
+    const submitData = () => {
+        if (!data.length) {
+            alert("Error: No expenses to submit")
+            return
+        }
+        fetch("http://localhost:3001/api")
+            .then(response => response.text())
+            .then(text => console.log(text))
+            .catch(error => console.log(error))
+    }       
 
     return (
         <div className="page">
@@ -61,7 +67,7 @@ export const DailyExpenses = () => {
                     <Button variant="primary" onClick={handleShow}>
                         Create an expense
                     </Button>
-                    <Button variant="success">
+                    <Button variant="success" onClick={submitData}>
                         Submit expenses
                     </Button>
                 </ButtonGroup>
@@ -73,7 +79,7 @@ export const DailyExpenses = () => {
             </div>
 
             <div className="table">
-                <h4>Daily Expenses Table</h4>
+                <h4>Daily Expenses</h4>
                 <Table striped bordered hover size="med" variant="dark">
                     <thead>
                         <tr>
