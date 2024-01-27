@@ -1,6 +1,7 @@
-/* .buttons {
-
-} */
+.buttons {  
+    display: flex;
+    justify-content: space-between;
+}
 
 .modal .modal-content {
     background-color: lightblue;
@@ -18,4 +19,8 @@
     text-align: center;
     margin: 0 10%;
     width: 80%
+}
+
+.custom_input {
+    background-color: lightcoral;
 }

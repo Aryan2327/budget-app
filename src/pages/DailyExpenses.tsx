@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Table from 'react-bootstrap/Table'
 import Form from 'react-bootstrap/Form';
+import { DateSelector } from '../components/DatePicker'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/DailyExpenses.css';
@@ -21,6 +22,10 @@ export const DailyExpenses = () => {
 
     // For dynamic table data
     const [data, setData] = useState<DailyExpenseForm[]>([])
+
+    // Date related state
+    const [curDate, setCurDate] = useState<Date | null>(new Date());
+    const [highlightedDates, setHighlightedDates] = useState<Date[]>([]);
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
@@ -49,15 +54,25 @@ export const DailyExpenses = () => {
             setData(data.concat([formData]))
             handleClose()
     }
-    const submitData = () => {
+    const submitData = async () => {
         if (!data.length) {
             alert("Error: No expenses to submit")
             return
         }
-        fetch("http://localhost:3001/api")
-            .then(response => response.text())
-            .then(text => console.log(text))
-            .catch(error => console.log(error))
+
+        try {
+            const response = await fetch("http://localhost:3001/api")
+            if (!response.ok) {
+                throw new Error("Network response was not OK")
+            }
+            console.log(await response.text())
+        } catch (error) {
+            console.error("There has been a problem with your request:", error)
+            return
+        }
+        curDate && setHighlightedDates(highlightedDates.concat([curDate]))
+        setData([])
+        return
     }       
 
     return (
@@ -71,6 +86,7 @@ export const DailyExpenses = () => {
                         Submit expenses
                     </Button>
                 </ButtonGroup>
+                <DateSelector curDate={curDate} setCurDate={setCurDate} highlightedDates={highlightedDates}/>
             </div>
 
             <div className="description">
@@ -106,7 +122,7 @@ export const DailyExpenses = () => {
 
             <Modal className="modal" show={show} onHide={handleClose} centered animation>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Create An Expense</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form id="daily_expense_form">
