@@ -17,6 +17,7 @@ app.get('/api', (req, res) => {
 })
 
 app.get('/api/daily', async (req, res) => {
+  //const client = await db.getClient()
   const result = await db.query('SELECT * FROM daily_expenses')
   res.send(result)
 })

@@ -2,6 +2,7 @@
 services:
   postgres:
     image: "postgres:16.1-bullseye"
+    container_name: postgres-db
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
@@ -9,3 +10,31 @@ services:
       - ./init_db.sh:/docker-entrypoint-initdb.d/init_db.sh
     ports:
       - 5432:5432
+    networks:
+      - backend
+
+  webapp:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: webapp
+    command: ["npm", "start"]
+    ports:
+      - 3000:3000
+    networks:
+      - backend
+  
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: api
+    command: ["npm", "run", "start-api"]
+    ports:
+      - 3001:3001
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
