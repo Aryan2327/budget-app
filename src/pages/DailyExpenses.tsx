@@ -61,7 +61,8 @@ export const DailyExpenses = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:3001/api/daily")
+            const reqBody = JSON.stringify({data, curDate})
+            const response = await fetch("http://localhost:3001/api/daily", {method: "POST", headers: {"Content-Type": "application/json"}, body: reqBody})
             if (!response.ok) {
                 throw new Error("Network response was not OK")
             }

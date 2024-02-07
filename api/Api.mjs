@@ -10,16 +10,22 @@ const corsOptions = {
   optionsSuccessStatus: 200
 }
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions), express.json(), express.urlencoded({ extended: true }))
 
 app.get('/api', (req, res) => {
   res.send('Hello world! This is API v1')
 })
 
-app.get('/api/daily', async (req, res) => {
+app.post('/api/daily', async (req, res) => {
   //const client = await db.getClient()
-  const result = await db.query('SELECT * FROM daily_expenses')
-  res.send(result)
+  //console.log(req.body)
+  const body = req.body
+  body.data.forEach(async (row) => {
+    const vars = [body.date, body.data.expense_type, body.data.expense_amount, body.data.expense_description];
+    await db.query('INSERT INTO daily_expenses(date, type, amount, description) VALUES($1, $2, $3, $4)', vars);
+  })
+  await res.send("Daily expenses submitted.")
+  //client.release()
 })
 
 app.listen(port, () => {
