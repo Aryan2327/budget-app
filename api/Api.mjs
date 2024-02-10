@@ -24,6 +24,7 @@ app.post('/api/daily', async (req, res) => {
     const vars = [body.date, body.data.expense_type, body.data.expense_amount, body.data.expense_description];
     await db.query('INSERT INTO daily_expenses(date, type, amount, description) VALUES($1, $2, $3, $4)', vars);
   })
+
   await res.send("Daily expenses submitted.")
   //client.release()
 })
