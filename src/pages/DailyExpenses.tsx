@@ -10,7 +10,7 @@ import { DateSelector } from '../components/DatePicker'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/DailyExpenses.css';
 
-const expenseTypes: string[] = ["Housing/Maintenance","Food", "Transportation","Clothing","Medical","Household supplies","Personal","Education","Gifts","Entertainment"]
+const expenseTypes: string[] = ["Housing/Maintenance","Food", "Transportation","Clothing","Medical","Household supplies","Insurance","Debt","Personal care","Child/Pet expenses","Education","Gifts","Entertainment","Charity","Miscellaneous"]
 interface DailyExpenseForm {
     expense_type: string;
     expense_amount: string;
